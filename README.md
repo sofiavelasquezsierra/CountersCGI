@@ -21,3 +21,11 @@ Bonus 3 <br/>
 create a seperate branch <br/>
 
 
+**Time Taken to complete task**
+- setting up repository + initializing node.js: **30min** <br/>
+- writing main node.js class: **1,5 hours** <br/>
+- creating database and linking to project: **2 hours** <br/>
+- postman tests + debugging: **1,5 hours** <br/>
+- bonus 1 (writing unit tests): **2,5 hours** <br/>
+
+TOTAL: **5hours30min** (or 8 hours including bonus)
