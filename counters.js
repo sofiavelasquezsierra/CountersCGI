@@ -4,10 +4,17 @@ const { Pool } = require ('pg');
 const app = express ();
 app.use(express.json());
 
-//in-mem storage for counters
-//app.get('/counters', (req,res) => {
-  //  res.json(counters);
-//});
+//define route handler for root URL
+app.get('/', (req, res) => {
+    res.send('Counter API:');
+});
+
+
+const PORT = process.env.PORT || 4001;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
 
 //link to databse 
 const pool = new Pool({
@@ -20,7 +27,7 @@ const pool = new Pool({
 })
 
 //GET /counters/ - List of counters in a map/dictionary format ({ “abc”: 5, “xyz”: 3 })
-app.get('/counters', async (req, res) => {
+app.get('/counters/', async (req, res) => {
     const result = await pool.query('SELECT * FROM counters');
     const counters = result.rows.reduce((acc, cur) => ({ ...acc, [cur.name]: cur.value }), {});
     res.json(counters);
@@ -29,6 +36,9 @@ app.get('/counters', async (req, res) => {
 // POST /counters - Create a new counter with an initial value { “counter”: initialValue }
 app.post('/counters', async (req, res) => {
     const { counter, initialValue } = req.body;
+    if (initialValue === undefined){
+        initialValue = 0;
+    }
     await pool.query('INSERT INTO counters (name, value) VALUES ($1, $2)', [counter, initialValue]);
     res.status(201).send('New counter created');
 });
